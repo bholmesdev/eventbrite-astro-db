@@ -1,0 +1,10 @@
+{
+  "otherinputs": {
+    "scope": "",
+    "prefix": "otherinputs",
+    "body": [
+      "      <label for=\"quantity\">Quantity</label>\n      <input id=\"quantity\" type=\"number\" name=\"quantity\" />\n\n      <label for=\"newsletter\">Hear about the next event in your area</label>\n      <input id=\"newsletter\" type=\"checkbox\" name=\"newsletter\" />"
+    ],
+    "description": ""
+  }
+}

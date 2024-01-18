@@ -1,0 +1,10 @@
+{
+  "you're going styles": {
+    "scope": "",
+    "prefix": "styles:youregoing",
+    "body": [
+      ".youre-going {\n    background: var(--surface-2);\n    padding: var(--size-2);\n  }\n\n  h2 {\n    font-size: var(--font-size-4);\n    margin-bottom: var(--size-2);\n  }"
+    ],
+    "description": ""
+  }
+}

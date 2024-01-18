@@ -1,0 +1,10 @@
+{
+  "quantity price component": {
+    "scope": "",
+    "prefix": "quantityprice",
+    "body": [
+      "import { useState } from \"preact/hooks\";\n\nexport default function QuantityPrice({ price }: { price: number }) {\n  const [quantity, setQuantity] = useState(1);\n  return (\n    <>\n      <h3>\\${(quantity * price) / 100}</h3>\n      <label for=\"quantity\">Quantity</label>\n      <input\n        type=\"number\"\n        id=\"quantity\"\n        name=\"quantity\"\n        min=\"1\"\n        max=\"5\"\n        defaultValue=\"1\"\n        onInput={(event) => {\n          setQuantity(parseInt(event.currentTarget.value));\n        }}\n      />\n    </>\n  );\n}\n"
+    ],
+    "description": ""
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "quantity set state": {
+    "scope": "",
+    "prefix": "quantitysetstate",
+    "body": [
+      "  const [quantity, setQuantity] = useState(1);"
+    ],
+    "description": ""
+  }
+}

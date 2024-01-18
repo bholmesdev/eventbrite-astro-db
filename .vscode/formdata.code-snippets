@@ -1,0 +1,10 @@
+{
+  "formdata": {
+    "scope": "",
+    "prefix": "formdata",
+    "body": [
+      "if (Astro.request.method === \"POST\") {\n  const formData = await Astro.request.formData();\n  const email = formData.get(\"email\");\n  const quantity = formData.get(\"quantity\");\n  const newsletter = formData.get(\"newsletter\");\n  console.log(email, quantity, newsletter);\n}"
+    ],
+    "description": ""
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "sqlite seed": {
+    "scope": "",
+    "prefix": "sqlite",
+    "body": [
+      "DROP TABLE IF EXISTS `tickets`;\nDROP TABLE IF EXISTS `events`;\n\nCREATE TABLE `events` (\n    `id` INTEGER PRIMARY KEY AUTOINCREMENT,\n    `name` TEXT NOT NULL,\n    `description` text NOT NULL,\n    `ticket_price` INTEGER NOT NULL,\n    `date` TEXT NOT NULL,\n    `location` TEXT NOT NULL,\n    `created_at` TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,\n    `updated_at` TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP\n);\n\nCREATE TABLE `tickets` (\n    `id` INTEGER PRIMARY KEY AUTOINCREMENT,\n    `event_id` INTEGER NOT NULL,\n    `email` TEXT NOT NULL,\n    `quantity` INTEGER NOT NULL,\n    `created_at` TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,\n    `updated_at` TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,\n    FOREIGN KEY(`event_id`) REFERENCES `events`(`id`)\n);\n\nINSERT INTO\n    `events` (\n        `name`,\n        `description`,\n        `date`,\n        `ticket_price`,\n        `location`\n    )\nVALUES\n    (\n        'Sampha LIVE in Brooklyn',\n        'Sampha is on tour with his new, flawless album Lahai. Come see the live performance outdoors in Prospect Park. Yes, there will be a grand piano 🎹',\n        '2024-01-01',\n        10000,\n        'Brooklyn, NY'\n    );"
+    ],
+    "description": ""
+  }
+}

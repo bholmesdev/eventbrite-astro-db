@@ -1,0 +1,10 @@
+{
+  "preact hooks useState": {
+    "scope": "",
+    "prefix": "preacthooks:usestate",
+    "body": [
+      "import { useState } from \"preact/hooks\";"
+    ],
+    "description": ""
+  }
+}

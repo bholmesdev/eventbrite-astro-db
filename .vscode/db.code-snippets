@@ -1,0 +1,10 @@
+{
+  "db": {
+    "scope": "",
+    "prefix": "db",
+    "body": [
+      "Astro.locals.runtime.env.DB"
+    ],
+    "description": "Cloudflare database locals"
+  }
+}

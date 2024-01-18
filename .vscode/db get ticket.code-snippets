@@ -1,0 +1,10 @@
+{
+  "db get ticket": {
+    "scope": "",
+    "prefix": "db:getticket",
+    "body": [
+      "const ticket = await Astro.locals.runtime.env.DB.prepare(\n  \"SELECT * FROM tickets WHERE event_id = ?\"\n)\n  .bind(Astro.params.event)\n  .first();"
+    ],
+    "description": ""
+  }
+}

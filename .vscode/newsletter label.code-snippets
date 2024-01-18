@@ -1,0 +1,10 @@
+{
+  "newsletter label": {
+    "scope": "",
+    "prefix": "newsletterlabel",
+    "body": [
+      "          <label for=\"newsletter\">Hear about the next event in your area</label>"
+    ],
+    "description": ""
+  }
+}
