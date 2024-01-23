@@ -1,0 +1,63 @@
+{
+  "Event": {
+    "fields": {
+      "name": {
+        "type": "text",
+        "multiline": false,
+        "optional": false,
+        "unique": false
+      },
+      "description": {
+        "type": "text",
+        "multiline": false,
+        "optional": false,
+        "unique": false
+      },
+      "ticketPrice": {
+        "type": "number",
+        "optional": false,
+        "unique": false
+      },
+      "date": {
+        "type": "date",
+        "optional": false,
+        "unique": false
+      },
+      "location": {
+        "type": "text",
+        "multiline": false,
+        "optional": false,
+        "unique": false
+      }
+    },
+    "writable": false
+  },
+  "Ticket": {
+    "fields": {
+      "eventId": {
+        "type": "text",
+        "multiline": false,
+        "optional": false,
+        "unique": false
+      },
+      "email": {
+        "type": "text",
+        "multiline": false,
+        "optional": false,
+        "unique": false
+      },
+      "quantity": {
+        "type": "number",
+        "optional": false,
+        "unique": false
+      },
+      "newsletter": {
+        "type": "boolean",
+        "optional": false,
+        "unique": false,
+        "default": false
+      }
+    },
+    "writable": true
+  }
+}
