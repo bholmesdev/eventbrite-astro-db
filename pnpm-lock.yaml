@@ -10,7 +10,7 @@ dependencies:
     version: 0.3.1(typescript@5.3.2)
   '@astrojs/db':
     specifier: ^0.1.1
-    version: 0.1.1(@cloudflare/workers-types@4.20231121.0)
+    version: 0.1.1
   '@astrojs/node':
     specifier: ^8.0.0
     version: 8.0.0(astro@4.2.3)
@@ -35,11 +35,6 @@ dependencies:
   zod:
     specifier: ^3.22.4
     version: 3.22.4
-
-devDependencies:
-  '@cloudflare/workers-types':
-    specifier: ^4.20231121.0
-    version: 4.20231121.0
 
 packages:
 
@@ -76,12 +71,12 @@ packages:
     resolution: {integrity: sha512-ZDluNgMIJT+z+HJcZ6QEJ/KqaFkTkrb+Za6c6VZs8G/nb1LBErL14/iU5EVJ9yu25i4QCLweuBJ3m5df34gZJg==}
     dev: false
 
-  /@astrojs/db@0.1.1(@cloudflare/workers-types@4.20231121.0):
+  /@astrojs/db@0.1.1:
     resolution: {integrity: sha512-Nv54E4+VmG4UIBqUTy8bYALErPmIQh1F+RI0yP1zlWb9B45d9D6mmV23BepsATaMk/NqQHaqvqDpsH3YuJyAAQ==}
     dependencies:
       '@libsql/client': 0.4.0-pre.5
       deep-diff: 1.0.2
-      drizzle-orm: 0.28.6(@cloudflare/workers-types@4.20231121.0)(@libsql/client@0.4.0-pre.5)
+      drizzle-orm: 0.28.6(@libsql/client@0.4.0-pre.5)
       kleur: 4.1.5
       nanoid: 5.0.4
       prompts: 2.4.2
@@ -598,9 +593,6 @@ packages:
     dev: false
     bundledDependencies:
       - is-unicode-supported
-
-  /@cloudflare/workers-types@4.20231121.0:
-    resolution: {integrity: sha512-+kWfpCkqiepwAKXyHoE0gnkPgkLhz0/9HOBIGhHRsUvUKvhUtm3mbqqoGRWgF1qcjzrDUBbrrOq4MYHfFtc2RA==}
 
   /@emmetio/abbreviation@2.3.3:
     resolution: {integrity: sha512-mgv58UrU3rh4YgbE/TzgLQwJ3pFsHHhCLqY20aJq+9comytTXUDNGG/SMtSeMJdkpxgXSXunBGLD8Boka3JyVA==}
@@ -1455,7 +1447,7 @@ packages:
       semver: 7.5.4
       server-destroy: 1.0.1
       shikiji: 0.9.19
-      string-width: 7.0.0
+      string-width: 7.1.0
       strip-ansi: 7.1.0
       tsconfck: 3.0.0(typescript@5.3.2)
       unist-util-visit: 5.0.0
@@ -1894,7 +1886,7 @@ packages:
     resolution: {integrity: sha512-+HlytyjlPKnIG8XuRG8WvmBP8xs8P71y+SKKS6ZXWoEgLuePxtDoUEiH7WkdePWrQ5JBpE6aoVqfZfJUQkjXwA==}
     dev: false
 
-  /drizzle-orm@0.28.6(@cloudflare/workers-types@4.20231121.0)(@libsql/client@0.4.0-pre.5):
+  /drizzle-orm@0.28.6(@libsql/client@0.4.0-pre.5):
     resolution: {integrity: sha512-yBe+F9htrlYER7uXgDJUQsTHFoIrI5yMm5A0bg0GiZ/kY5jNXTWoEy4KQtg35cE27sw1VbgzoMWHAgCckUUUww==}
     peerDependencies:
       '@aws-sdk/client-rds-data': '>=3'
@@ -1956,7 +1948,6 @@ packages:
       sqlite3:
         optional: true
     dependencies:
-      '@cloudflare/workers-types': 4.20231121.0
       '@libsql/client': 0.4.0-pre.5
     dev: false
 
@@ -2265,7 +2256,7 @@ packages:
     dev: false
 
   /github-from-package@0.0.0:
-    resolution: {integrity: sha1-l/tdlr/eiXMxPyDoKI75oWf6ZM4=}
+    resolution: {integrity: sha512-SyHy3T1v2NUXn29OsWdxmK6RwHD+vkj3v8en8AOBZ1wBQ/hCAQ5bAQTD02kW4W9tUp/3Qh6J8r9EvntiyCmOOw==}
     requiresBuild: true
     dev: false
     optional: true
@@ -3978,8 +3969,8 @@ packages:
       strip-ansi: 7.1.0
     dev: false
 
-  /string-width@7.0.0:
-    resolution: {integrity: sha512-GPQHj7row82Hjo9hKZieKcHIhaAIKOJvFSIZXuCU9OASVZrMNUaZuz++SPVrBjnLsnk4k+z9f2EIypgxf2vNFw==}
+  /string-width@7.1.0:
+    resolution: {integrity: sha512-SEIJCWiX7Kg4c129n48aDRwLbFb2LJmXXFrWBG4NGaRtMQ3myKPKbwrD1BKqQn74oCoNMBVrfDEr5M9YxCsrkw==}
     engines: {node: '>=18'}
     dependencies:
       emoji-regex: 10.3.0
