@@ -115,16 +115,17 @@ export function Input({
           formContext.validateField(inputProps.name, value, validator);
         }}
         onInput={async (e) => {
+          onInput?.(e);
           if (!hasErroredOnce) return;
           const value = e.currentTarget.value;
           formContext.validateField(inputProps.name, value, validator);
-
-          onInput?.(e);
         }}
         {...inputProps}
       />
       {validationErrors?.map((e) => (
-        <p key={e}>{e}</p>
+        <p class="error" key={e}>
+          {e}
+        </p>
       ))}
     </>
   );
