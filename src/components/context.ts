@@ -12,7 +12,7 @@ export function createContext<T>(initial: T) {
       }
       return initial;
     },
-    provide<V extends T>(element: HTMLElement, value: V) {
+    provide(element: HTMLElement, value: T) {
       map.set(element, value);
       return value;
     },

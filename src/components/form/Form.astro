@@ -39,7 +39,7 @@ const props = Astro.props;
         status: atom("idle"),
         validator:
           validators[this.form.name as keyof typeof validators].validator,
-      });
+      })!;
     }
 
     connectedCallback() {
