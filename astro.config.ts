@@ -31,7 +31,7 @@ const Ticket = defineWritableCollection({
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [preact(), simpleStackForm(), db()],
+  integrations: [simpleStackForm(), db()],
   output: "server",
   adapter: node({
     mode: "standalone",
@@ -51,6 +51,11 @@ export default defineConfig({
         ticketPrice: 10000,
         location: "Brooklyn, NY",
       });
+    },
+  },
+  vite: {
+    esbuild: {
+      keepNames: true,
     },
   },
 });
