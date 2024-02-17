@@ -18,6 +18,7 @@
     "@github/catalyst": "^1.6.0",
     "@github/jtml": "^0.5.1",
     "astro": "^4.2.8",
+    "nanostores": "^0.9.5",
     "open-props": "^1.6.17",
     "preact": "^10.6.5",
     "simple-stack-form": "^0.1.10",

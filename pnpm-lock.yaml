@@ -26,6 +26,9 @@ dependencies:
   astro:
     specifier: ^4.2.8
     version: 4.2.8(typescript@5.3.2)
+  nanostores:
+    specifier: ^0.9.5
+    version: 0.9.5
   open-props:
     specifier: ^1.6.17
     version: 1.6.17
@@ -3223,6 +3226,11 @@ packages:
     resolution: {integrity: sha512-vAjmBf13gsmhXSgBrtIclinISzFFy22WwCYoyilZlsrRXNIHSwgFQ1bEdjRwMT3aoadeIF6HMuDRlOxzfXV8ig==}
     engines: {node: ^18 || >=20}
     hasBin: true
+    dev: false
+
+  /nanostores@0.9.5:
+    resolution: {integrity: sha512-Z+p+g8E7yzaWwOe5gEUB2Ox0rCEeXWYIZWmYvw/ajNYX8DlXdMvMDj8DWfM/subqPAcsf8l8Td4iAwO1DeIIRQ==}
+    engines: {node: ^16.0.0 || ^18.0.0 || >=20.0.0}
     dev: false
 
   /napi-build-utils@1.0.2:
