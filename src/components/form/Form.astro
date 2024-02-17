@@ -16,26 +16,37 @@ const { name, ...formProps } = Astro.props;
 </s-form>
 
 <script>
-  import { controller, target, targets, attr } from "@github/catalyst";
-  import { validateForm, type FormValidator } from "simple:form";
+  import { controller, target, targets } from "@github/catalyst";
+  import { validateForm } from "simple:form";
   import * as validators from "./validators";
   import { navigate } from "astro:transitions/client";
+  import { formContext, type FormContext } from "./ctx";
+  import { atom } from "nanostores";
 
   @controller
   class SFormElement extends HTMLElement {
     @target form!: HTMLFormElement;
     @targets inputs!: HTMLElement[];
-    @attr status: "idle" | "validating" | "errored" = "idle";
 
-    #validator!: FormValidator;
+    #status: FormContext["status"];
+    #validator: FormContext["validator"];
 
-    connectedCallback() {
+    constructor() {
+      super();
       if (!(this.form.name in validators)) {
         throw new Error(`Validator "${this.form.name}" not found`);
       }
+      this.#status = atom("idle");
       this.#validator =
         validators[this.form.name as keyof typeof validators].validator;
 
+      formContext.set(this, {
+        validator: this.#validator,
+        status: this.#status,
+      });
+    }
+
+    connectedCallback() {
       this.form.addEventListener("submit", this.submitForm.bind(this));
     }
 
@@ -43,7 +54,7 @@ const { name, ...formProps } = Astro.props;
       e.preventDefault();
       e.stopPropagation();
       const formData = new FormData(this.form);
-      this.status = "validating";
+      this.#status.set("validating");
       const parsed = await validateForm({
         formData,
         validator: this.#validator,
@@ -53,7 +64,7 @@ const { name, ...formProps } = Astro.props;
         document.addEventListener(
           "astro:after-preparation",
           () => {
-            this.status = "idle";
+            this.#status.set("idle");
           },
           {
             once: true,
@@ -61,15 +72,7 @@ const { name, ...formProps } = Astro.props;
         );
         return;
       }
-      this.status = "errored";
-    }
-
-    attributeChangedCallback(name: string) {
-      if (name === "data-status") {
-        for (const input of this.inputs) {
-          input.setAttribute("data-form-status", this.status);
-        }
-      }
+      this.#status.set("errored");
     }
   }
 </script>
