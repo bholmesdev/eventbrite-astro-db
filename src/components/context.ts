@@ -1,7 +1,7 @@
 export function createContext<T>(initial: T) {
   const map: WeakMap<HTMLElement, T> = new WeakMap();
   return {
-    get(element: HTMLElement): T {
+    use(element: HTMLElement): T {
       // walk up the tree to find the nearest context
       let current: HTMLElement | null = element;
       while (current) {
@@ -12,7 +12,7 @@ export function createContext<T>(initial: T) {
       }
       return initial;
     },
-    set(element: HTMLElement, value: T) {
+    provide(element: HTMLElement, value: T) {
       map.set(element, value);
       return value;
     },

@@ -38,7 +38,7 @@ const props = Astro.props;
 
     constructor() {
       super();
-      const context = formContext.get(this);
+      const context = formContext.use(this);
       if (!context) {
         throw new Error(
           "Form context not found. Did you use Input outside of a Form?"

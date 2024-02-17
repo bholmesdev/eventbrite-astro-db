@@ -40,7 +40,7 @@ const { name, ...formProps } = Astro.props;
       this.#validator =
         validators[this.form.name as keyof typeof validators].validator;
 
-      formContext.set(this, {
+      formContext.provide(this, {
         validator: this.#validator,
         status: this.#status,
       });
