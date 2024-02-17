@@ -1,7 +1,9 @@
 ---
 import { Event, Ticket, db, eq } from "astro:db";
 import Layout from "../../layouts/Layout.astro";
-import { TicketForm, ticketForm } from "./_Ticket";
+import Form from "../../components/form/Form.astro";
+import Input from "../../components/form/Input.astro";
+import { ticketForm } from "../../components/form/validators";
 
 if (!Astro.params.event) return Astro.redirect("/404");
 
@@ -38,7 +40,18 @@ const ticket = await db
       {event.description}
     </p>
 
-    <TicketForm price={event.ticketPrice} client:load />
+    <Form name="ticketForm">
+      <label for="email">Email</label>
+      <Input id="email" {...ticketForm.inputProps.email} />
+
+      <label for="quantity">Quantity</label>
+      <Input id="quantity" {...ticketForm.inputProps.quantity} />
+
+      <label for="newsletter">Subscribe to newsletter</label>
+      <Input id="newsletter" {...ticketForm.inputProps.newsletter} />
+
+      <button type="submit">Buy tickets</button>
+    </Form>
     {
       ticket && (
         <section class="youre-going">

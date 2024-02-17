@@ -1,0 +1,75 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import type * as validators from "./validators";
+
+type Props = Omit<HTMLAttributes<"form">, "name" | "method"> & {
+  name: keyof typeof validators;
+};
+
+const { name, ...formProps } = Astro.props;
+---
+
+<s-form>
+  <form {name} {...formProps} method="POST" data-target="s-form.form">
+    <slot />
+  </form>
+</s-form>
+
+<script>
+  import { controller, target, targets, attr } from "@github/catalyst";
+  import { validateForm, type FormValidator } from "simple:form";
+  import * as validators from "./validators";
+  import { navigate } from "astro:transitions/client";
+
+  @controller
+  class SFormElement extends HTMLElement {
+    @target form!: HTMLFormElement;
+    @targets inputs!: HTMLElement[];
+    @attr status: "idle" | "validating" | "errored" = "idle";
+
+    #validator!: FormValidator;
+
+    connectedCallback() {
+      if (!(this.form.name in validators)) {
+        throw new Error(`Validator "${this.form.name}" not found`);
+      }
+      this.#validator =
+        validators[this.form.name as keyof typeof validators].validator;
+
+      this.form.addEventListener("submit", this.submitForm.bind(this));
+    }
+
+    async submitForm(e: SubmitEvent) {
+      e.preventDefault();
+      e.stopPropagation();
+      const formData = new FormData(this.form);
+      this.status = "validating";
+      const parsed = await validateForm({
+        formData,
+        validator: this.#validator,
+      });
+      if (parsed.data) {
+        navigate(this.form.action, { formData });
+        document.addEventListener(
+          "astro:after-preparation",
+          () => {
+            this.status = "idle";
+          },
+          {
+            once: true,
+          }
+        );
+        return;
+      }
+      this.status = "errored";
+    }
+
+    attributeChangedCallback(name: string) {
+      if (name === "data-status") {
+        for (const input of this.inputs) {
+          input.setAttribute("data-form-status", this.status);
+        }
+      }
+    }
+  }
+</script>

@@ -1,0 +1,73 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+type Props = HTMLAttributes<"input">;
+
+const props = Astro.props;
+---
+
+<s-input data-targets="s-form.inputs">
+  <input
+    {...props}
+    data-target="s-input.input"
+    data-action="input:s-input#validate blur:s-input#validate"
+  />
+</s-input>
+
+<style>
+  input {
+    width: 100%;
+  }
+</style>
+
+<script>
+  import { controller, target, attr } from "@github/catalyst";
+  import { html, render } from "@github/jtml";
+  import * as validators from "./validators";
+  import type { FormValidator } from "simple:form";
+
+  @controller
+  class SInputElement extends HTMLElement {
+    @attr dirty = false;
+    @attr formStatus: "idle" | "validating" | "errored" = "idle";
+    @target input!: HTMLInputElement;
+
+    #validator!: FormValidator;
+
+    connectedCallback() {
+      const form = this.closest("form");
+      if (!form) {
+        throw new Error("s-input must be inside a form");
+      }
+      if (!(form.name in validators)) {
+        throw new Error(`No validator found for form ${form.name}`);
+      }
+      this.#validator =
+        validators[form.name as keyof typeof validators].validator;
+    }
+
+    validate(e: Event) {
+      if (e.type === "input" && !this.dirty) return;
+
+      const value = this.input.value;
+      if (value === "" && !this.dirty) return;
+      if (e.type === "blur") this.dirty = true;
+
+      const res = this.#validator[this.input.name].safeParse(value);
+      const errors = res.success ? [] : res.error.format()._errors;
+
+      render(
+        html`${errors.length
+          ? errors.map((e) => html`<p class="error">${e}</p>`)
+          : null}`,
+        this
+      );
+    }
+
+    attributeChangedCallback(name: string, old: string, value: string) {
+      if (name === "data-form-status" && value === "errored") {
+        this.validate(new Event("blur"));
+      }
+    }
+  }
+</script>
