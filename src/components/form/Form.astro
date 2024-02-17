@@ -6,11 +6,11 @@ type Props = Omit<HTMLAttributes<"form">, "name" | "method"> & {
   name: keyof typeof validators;
 };
 
-const { name, ...formProps } = Astro.props;
+const props = Astro.props;
 ---
 
 <s-form>
-  <form {name} {...formProps} method="POST" data-target="s-form.form">
+  <form {...props} method="POST" data-target="s-form.form">
     <slot />
   </form>
 </s-form>
@@ -28,22 +28,19 @@ const { name, ...formProps } = Astro.props;
     @target form!: HTMLFormElement;
     @targets inputs!: HTMLElement[];
 
-    #status: FormContext["status"];
-    #validator: FormContext["validator"];
+    #context: FormContext;
 
     constructor() {
       super();
       if (!(this.form.name in validators)) {
         throw new Error(`Validator "${this.form.name}" not found`);
       }
-      this.#status = atom("idle");
-      this.#validator =
-        validators[this.form.name as keyof typeof validators].validator;
-
-      formContext.provide(this, {
-        validator: this.#validator,
-        status: this.#status,
-      });
+      this.#context = {
+        status: atom("idle"),
+        validator:
+          validators[this.form.name as keyof typeof validators].validator,
+      };
+      formContext.provide(this, this.#context);
     }
 
     connectedCallback() {
@@ -51,20 +48,21 @@ const { name, ...formProps } = Astro.props;
     }
 
     async submitForm(e: SubmitEvent) {
+      const { status, validator } = this.#context;
       e.preventDefault();
       e.stopPropagation();
       const formData = new FormData(this.form);
-      this.#status.set("validating");
+      status.set("validating");
       const parsed = await validateForm({
         formData,
-        validator: this.#validator,
+        validator,
       });
       if (parsed.data) {
         navigate(this.form.action, { formData });
         document.addEventListener(
           "astro:after-preparation",
           () => {
-            this.#status.set("idle");
+            status.set("idle");
           },
           {
             once: true,
@@ -72,7 +70,7 @@ const { name, ...formProps } = Astro.props;
         );
         return;
       }
-      this.#status.set("errored");
+      status.set("errored");
     }
   }
 </script>
