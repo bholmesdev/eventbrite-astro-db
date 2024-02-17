@@ -35,12 +35,11 @@ const props = Astro.props;
       if (!(this.form.name in validators)) {
         throw new Error(`Validator "${this.form.name}" not found`);
       }
-      this.#context = {
+      this.#context = formContext.provide(this, {
         status: atom("idle"),
         validator:
           validators[this.form.name as keyof typeof validators].validator,
-      };
-      formContext.provide(this, this.#context);
+      });
     }
 
     connectedCallback() {
