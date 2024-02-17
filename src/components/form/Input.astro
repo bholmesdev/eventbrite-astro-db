@@ -18,6 +18,9 @@ const props = Astro.props;
   input {
     width: 100%;
   }
+  [data-errored] input {
+    outline: 1px solid var(--red-6);
+  }
 </style>
 
 <script>
@@ -28,6 +31,7 @@ const props = Astro.props;
   @controller
   class SInputElement extends HTMLElement {
     @attr dirty = false;
+    @attr errored = false;
     @target input!: HTMLInputElement;
 
     #formContext: FormContext;
@@ -58,6 +62,7 @@ const props = Astro.props;
       }
       const res = inputValidator.safeParse(value);
       const errors = res.success ? [] : res.error.format()._errors;
+      this.errored = errors.length > 0;
 
       render(
         html`${errors.length
