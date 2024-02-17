@@ -47,6 +47,15 @@ const props = Astro.props;
       this.#formContext = context;
     }
 
+    connectedCallback() {
+      this.#formContext.status.subscribe((status) => {
+        if (status === "errored") {
+          this.dirty = true;
+          this.validate(new Event("input"));
+        }
+      });
+    }
+
     validate(e: Event) {
       if (e.type === "input" && !this.dirty) return;
 
