@@ -11,11 +11,12 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/check": "^0.3.1",
-    "@astrojs/db": "^0.2.0",
-    "@astrojs/node": "^8.0.0",
-    "@astrojs/preact": "^3.0.1",
-    "astro": "^4.2.8",
+    "@astrojs/check": "^0.5.6",
+    "@astrojs/db": "^0.6.0",
+    "@astrojs/node": "^8.2.3",
+    "@astrojs/preact": "^3.1.1",
+    "astro": "^4.4.10",
+    "clsx": "^2.1.0",
     "open-props": "^1.6.17",
     "preact": "^10.6.5",
     "simple-stack-form": "^0.1.10",
