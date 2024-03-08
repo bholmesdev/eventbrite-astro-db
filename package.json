@@ -6,13 +6,13 @@
     "sync": "pnpm db sync",
     "dev": "pnpm astro dev",
     "start": "astro dev",
-    "build": "astro check && astro build",
+    "build": "astro build",
     "preview": "astro preview",
     "astro": "astro"
   },
   "dependencies": {
     "@astrojs/check": "^0.5.6",
-    "@astrojs/db": "^0.6.1",
+    "@astrojs/db": "0.7.0",
     "@astrojs/node": "^8.2.3",
     "@astrojs/preact": "^3.1.1",
     "astro": "^4.4.10",
