@@ -1,0 +1,10 @@
+{
+  "cols:event": {
+    "scope": "",
+    "prefix": "cols:event",
+    "body": [
+      "    id: column.number({\n      primaryKey: true,\n    }),\n    name: column.text(),\n    description: column.text(),\n    ticketPrice: column.number(),\n    date: column.date(),\n    location: column.text(),"
+    ],
+    "description": ""
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "cols:ticket": {
+    "scope": "",
+    "prefix": "cols:ticket",
+    "body": [
+      "    eventId: column.number({ references: () => Event.columns.id }),\n    email: column.text(),\n    quantity: column.number(),\n    newsletter: column.boolean({\n      default: true,\n    }),"
+    ],
+    "description": ""
+  }
+}
