@@ -1,7 +1,7 @@
 ---
 import { Event, db } from "astro:db";
 
-// query for first event
+const firstEvent = await db.select().from(Event).get();
 ---
 
 <!doctype html>

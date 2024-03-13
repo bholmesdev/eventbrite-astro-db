@@ -14,7 +14,12 @@ if (!event) return Astro.redirect("/404");
 const res = await Astro.locals.form.getData(ticketForm);
 
 if (res?.data) {
-  // insert ticket
+  await db.insert(Ticket).values({
+    eventId,
+    email: res.data.email,
+    quantity: res.data.quantity,
+    newsletter: res.data.newsletter,
+  });
 }
 
 const ticket = await db
