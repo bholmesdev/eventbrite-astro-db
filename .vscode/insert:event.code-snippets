@@ -1,0 +1,10 @@
+{
+  "insert:event": {
+    "scope": "",
+    "prefix": "insert:event",
+    "body": [
+      "    name: \"Sampha LIVE in Brooklyn\",\n    description:\n      \"Sampha is on tour with his new, flawless album Lahai. Come see the live performance outdoors in Prospect Park. Yes, there will be a grand piano 🎹\",\n    date: new Date(\"2024-01-01\"),\n    ticketPrice: 10000,\n    location: \"Brooklyn, NY\","
+    ],
+    "description": ""
+  }
+}
