@@ -3,13 +3,11 @@ import { Event, Ticket, db, eq } from "astro:db";
 import Layout from "../../layouts/Layout.astro";
 import { TicketForm, ticketForm } from "./_Ticket";
 
-if (!Astro.params.event) return Astro.redirect("/404");
+const eventId = Number(Astro.params.event);
 
-const event = await db
-  .select()
-  .from(Event)
-  .where(eq(Event.id, Astro.params.event))
-  .get();
+if (isNaN(eventId)) return Astro.redirect("/404");
+
+const event = await db.select().from(Event).where(eq(Event.id, eventId)).get();
 
 if (!event) return Astro.redirect("/404");
 
@@ -17,7 +15,7 @@ const res = await Astro.locals.form.getData(ticketForm);
 
 if (res?.data) {
   await db.insert(Ticket).values({
-    eventId: Astro.params.event,
+    eventId,
     email: res.data.email,
     quantity: res.data.quantity,
     newsletter: res.data.newsletter,
@@ -27,7 +25,7 @@ if (res?.data) {
 const ticket = await db
   .select()
   .from(Ticket)
-  .where(eq(Ticket.eventId, Astro.params.event))
+  .where(eq(Ticket.eventId, eventId))
   .get();
 ---
 
