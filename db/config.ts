@@ -19,7 +19,7 @@ export const Ticket = defineTable({
     email: column.text(),
     quantity: column.number(),
     newsletter: column.boolean({
-      default: true,
+      default: false,
     }),
   },
 });
