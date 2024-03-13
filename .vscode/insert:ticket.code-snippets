@@ -1,0 +1,10 @@
+{
+  "insert:ticket": {
+    "scope": "",
+    "prefix": "insert:ticket",
+    "body": [
+      "    eventId,\n    email: res.data.email,\n    quantity: res.data.quantity,\n    newsletter: res.data.newsletter,"
+    ],
+    "description": ""
+  }
+}
