@@ -1,8 +1,0 @@
-name = "fake-eventbrite"
-compatibility_date = "2023-10-16"
-
-[[d1_databases]]
-binding = "DB" 
-database_name = "fake-eventbrite"
-database_id = "6894177b-e97c-4297-a30e-19c8eaa075c3"
-preview_database_id = "DB"
