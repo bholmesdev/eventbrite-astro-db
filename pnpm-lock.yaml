@@ -12,8 +12,8 @@ dependencies:
     specifier: ^9.1.0
     version: 9.1.0(astro@4.5.2)
   '@astrojs/db':
-    specifier: file:./astrojs-db-0.8.6.tgz
-    version: file:astrojs-db-0.8.6.tgz
+    specifier: 0.8.1
+    version: 0.8.1
   '@astrojs/node':
     specifier: ^8.2.3
     version: 8.2.3(astro@4.5.2)
@@ -95,6 +95,48 @@ packages:
 
   /@astrojs/compiler@2.7.0:
     resolution: {integrity: sha512-XpC8MAaWjD1ff6/IfkRq/5k1EFj6zhCNqXRd5J43SVJEBj/Bsmizkm8N0xOYscGcDFQkRgEw6/eKnI5x/1l6aA==}
+    dev: false
+
+  /@astrojs/db@0.8.1:
+    resolution: {integrity: sha512-EOM9IGe46zAmxq8nbPmoIvWjQ61HdclD1PsgW2JBY0m04GKhexC8lfGCGFWSUF2HlscRwAkW6UeEocqvOu/rGA==}
+    dependencies:
+      '@libsql/client': 0.5.5
+      async-listen: 3.0.1
+      deep-diff: 1.0.2
+      drizzle-orm: 0.29.5(@libsql/client@0.5.5)
+      kleur: 4.1.5
+      nanoid: 5.0.4
+      open: 10.0.4
+      ora: 7.0.1
+      prompts: 2.4.2
+      strip-ansi: 7.1.0
+      yargs-parser: 21.1.1
+      zod: 3.22.4
+    transitivePeerDependencies:
+      - '@aws-sdk/client-rds-data'
+      - '@cloudflare/workers-types'
+      - '@neondatabase/serverless'
+      - '@opentelemetry/api'
+      - '@planetscale/database'
+      - '@types/better-sqlite3'
+      - '@types/pg'
+      - '@types/react'
+      - '@types/sql.js'
+      - '@vercel/postgres'
+      - better-sqlite3
+      - bufferutil
+      - bun-types
+      - encoding
+      - expo-sqlite
+      - knex
+      - kysely
+      - mysql2
+      - pg
+      - postgres
+      - react
+      - sql.js
+      - sqlite3
+      - utf-8-validate
     dev: false
 
   /@astrojs/internal-helpers@0.3.0:
@@ -1886,14 +1928,13 @@ packages:
     engines: {node: '>=12'}
     dev: false
 
-  /drizzle-orm@0.30.2-be1fd1a(@libsql/client@0.5.5):
-    resolution: {integrity: sha512-2gYYk965TaFZf52d2YatBlUdbgbfWZjtjD/C82ibL/GCNKWoEP+eO+PZY8vFM2yhWjEXx5CDZvT4W6jN3A2HuQ==}
+  /drizzle-orm@0.29.5(@libsql/client@0.5.5):
+    resolution: {integrity: sha512-jS3+uyzTz4P0Y2CICx8FmRQ1eplURPaIMWDn/yq6k4ShRFj9V7vlJk67lSf2kyYPzQ60GkkNGXcJcwrxZ6QCRw==}
     peerDependencies:
       '@aws-sdk/client-rds-data': '>=3'
       '@cloudflare/workers-types': '>=3'
       '@libsql/client': '*'
       '@neondatabase/serverless': '>=0.1'
-      '@op-engineering/op-sqlite': '>=2'
       '@opentelemetry/api': ^1.4.1
       '@planetscale/database': '>=1'
       '@types/better-sqlite3': '*'
@@ -1920,8 +1961,6 @@ packages:
       '@libsql/client':
         optional: true
       '@neondatabase/serverless':
-        optional: true
-      '@op-engineering/op-sqlite':
         optional: true
       '@opentelemetry/api':
         optional: true
@@ -4811,49 +4850,4 @@ packages:
 
   /zwitch@2.0.4:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
-    dev: false
-
-  file:astrojs-db-0.8.6.tgz:
-    resolution: {integrity: sha512-wfLGUsB4/D15HoEsWQ+eC2+6EcoSa7kV+kxQefADqvLHGeJy/iTiwnM1hoRY/y8+3nV02wgth67XSb2uBFem2w==, tarball: file:astrojs-db-0.8.6.tgz}
-    name: '@astrojs/db'
-    version: 0.8.6
-    dependencies:
-      '@libsql/client': 0.5.5
-      async-listen: 3.0.1
-      deep-diff: 1.0.2
-      drizzle-orm: 0.30.2-be1fd1a(@libsql/client@0.5.5)
-      kleur: 4.1.5
-      nanoid: 5.0.4
-      open: 10.0.4
-      ora: 7.0.1
-      prompts: 2.4.2
-      strip-ansi: 7.1.0
-      yargs-parser: 21.1.1
-      zod: 3.22.4
-    transitivePeerDependencies:
-      - '@aws-sdk/client-rds-data'
-      - '@cloudflare/workers-types'
-      - '@neondatabase/serverless'
-      - '@op-engineering/op-sqlite'
-      - '@opentelemetry/api'
-      - '@planetscale/database'
-      - '@types/better-sqlite3'
-      - '@types/pg'
-      - '@types/react'
-      - '@types/sql.js'
-      - '@vercel/postgres'
-      - better-sqlite3
-      - bufferutil
-      - bun-types
-      - encoding
-      - expo-sqlite
-      - knex
-      - kysely
-      - mysql2
-      - pg
-      - postgres
-      - react
-      - sql.js
-      - sqlite3
-      - utf-8-validate
     dev: false

@@ -1,7 +1,7 @@
 ---
 import { Event, db } from "astro:db";
 
-const res = await db.select().from(Event).run();
+const firstEvent = await db.select().from(Event).get();
 ---
 
 <!doctype html>
@@ -12,8 +12,6 @@ const res = await db.select().from(Event).run();
     <title>Eventbrite</title>
   </head>
   <body>
-    <pre>
-    {JSON.stringify(res, null, 2)}
-    </pre>
+    <meta http-equiv="refresh" content={`0; url=${firstEvent!.id}`} />
   </body>
 </html>
