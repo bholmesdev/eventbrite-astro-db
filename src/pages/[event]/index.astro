@@ -18,7 +18,7 @@ const event = await db.select().from(Event).where(eq(Event.id, eventId)).get();
 
 if (!event) return Astro.redirect("/404");
 
-const checkout = await defineAction(async (formData) => {
+const checkout = defineAction(async (formData) => {
   const { data, fieldErrors } = await validateForm({ formData, ...ticketForm });
   if (!data) return { fieldErrors };
 
@@ -57,6 +57,7 @@ const checkout = await defineAction(async (formData) => {
 
 <script>
   // enhance the form
+  import { navigate } from "astro:transitions/client";
   const form = document.querySelector("form")!;
 
   form.addEventListener("submit", async (e) => {
@@ -72,6 +73,7 @@ const checkout = await defineAction(async (formData) => {
       form.dispatchEvent(new CustomEvent("fancy-submit", { detail: json }));
       return;
     }
+    navigate(response.url);
   });
 
   form.addEventListener("fancy-submit", (e) => {
