@@ -1,9 +1,16 @@
 ---
 import { Event, Ticket, db, eq } from "astro:db";
 import Layout from "../../layouts/Layout.astro";
-import { TicketForm, ticketForm } from "./_Ticket";
+import { defineAction } from "../../action";
+import { createForm, validateForm } from "simple:form";
+import { z } from "zod";
 
 const eventId = Number(Astro.params.event);
+const ticketForm = createForm({
+  email: z.string().email(),
+  quantity: z.number().max(10),
+  newsletter: z.boolean(),
+});
 
 if (isNaN(eventId)) return Astro.redirect("/404");
 
@@ -11,22 +18,22 @@ const event = await db.select().from(Event).where(eq(Event.id, eventId)).get();
 
 if (!event) return Astro.redirect("/404");
 
-const res = await Astro.locals.form.getData(ticketForm);
+const checkout = await defineAction(async (formData) => {
+  const { data, fieldErrors } = await validateForm({ formData, ...ticketForm });
+  if (!data) return { fieldErrors };
 
-if (res?.data) {
-  await db.insert(Ticket).values({
-    eventId,
-    email: res.data.email,
-    quantity: res.data.quantity,
-    newsletter: res.data.newsletter,
-  });
-}
-
-const ticket = await db
-  .select()
-  .from(Ticket)
-  .where(eq(Ticket.eventId, eventId))
-  .get();
+  const ticket = await db
+    .insert(Ticket)
+    .values({
+      eventId,
+      email: data.email,
+      quantity: data.quantity,
+      newsletter: data.newsletter,
+    })
+    .returning()
+    .get();
+  return ticket;
+});
 ---
 
 <Layout title="Welcome to Astro.">
@@ -35,20 +42,56 @@ const ticket = await db
     <p>
       {event.description}
     </p>
-
-    <TicketForm price={event.ticketPrice} client:load />
-    {
-      ticket && (
-        <section class="youre-going">
-          <h2>You're going 🙌</h2>
-          <p>
-            You have purchased {ticket.quantity} tickets for {event.name}!
-          </p>
-          <p>
-            Check <strong>{ticket.email}</strong> for your tickets.
-          </p>
-        </section>
-      )
-    }
+    <form method="POST" action={checkout}>
+      <input type="number" name="quantity" min="1" max="10" required />
+      <input type="email" name="email" required />
+      <label>
+        <input type="checkbox" name="newsletter" />
+        Subscribe to our newsletter
+      </label>
+      <button>Buy</button>
+    </form>
+    <pre id="result"></pre>
   </main>
 </Layout>
+
+<script>
+  // enhance the form
+  const form = document.querySelector("form")!;
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const formData = new FormData(form);
+    const response = await fetch(form.action, {
+      method: form.method,
+      body: formData,
+    });
+    if (response.headers.get("content-type") === "application/json") {
+      const json = await response.json();
+      form.dispatchEvent(new CustomEvent("fancy-submit", { detail: json }));
+      return;
+    }
+  });
+
+  form.addEventListener("fancy-submit", (e) => {
+    console.log("detail", e.detail);
+    const { fieldErrors } = e.detail;
+    // TODO: standardize error handling
+    if (fieldErrors) {
+      for (const [name, error] of Object.entries(fieldErrors)) {
+        const input = form.elements.namedItem(name);
+        if (input) {
+          input.setCustomValidity(error);
+          input.reportValidity();
+        }
+      }
+    } else {
+      document.querySelector("#result").textContent = JSON.stringify(
+        e.detail,
+        null,
+        2
+      );
+    }
+  });
+</script>
