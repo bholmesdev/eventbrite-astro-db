@@ -3,6 +3,7 @@ import { Event, Ticket, db, eq } from "astro:db";
 import Layout from "../../layouts/Layout.astro";
 import { createForm, validateForm } from "simple:form";
 import { z } from "zod";
+import { buyTicket } from "simple:action";
 
 const eventId = Number(Astro.params.event);
 const ticketForm = createForm({
@@ -16,23 +17,6 @@ if (isNaN(eventId)) return Astro.redirect("/404");
 const event = await db.select().from(Event).where(eq(Event.id, eventId)).get();
 
 if (!event) return Astro.redirect("/404");
-
-const checkout = Astro.locals.action(async (formData) => {
-  const { data, fieldErrors } = await validateForm({ formData, ...ticketForm });
-  if (!data) return { fieldErrors };
-
-  const ticket = await db
-    .insert(Ticket)
-    .values({
-      eventId,
-      email: data.email,
-      quantity: data.quantity,
-      newsletter: data.newsletter,
-    })
-    .returning()
-    .get();
-  return ticket;
-});
 ---
 
 <Layout title="Welcome to Astro.">
@@ -41,7 +25,8 @@ const checkout = Astro.locals.action(async (formData) => {
     <p>
       {event.description}
     </p>
-    <form method="POST" action={checkout}>
+    <form method="POST" action={buyTicket}>
+      <input type="hidden" name="eventId" value={event.id} />
       <input type="number" name="quantity" min="1" max="10" required />
       <input type="email" name="email" required />
       <label>
@@ -56,24 +41,16 @@ const checkout = Astro.locals.action(async (formData) => {
 
 <script>
   // enhance the form
-  import { navigate } from "astro:transitions/client";
+  import { buyTicket } from "simple:action";
   const form = document.querySelector("form")!;
 
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    const formData = new FormData(form);
-    const response = await fetch(form.action, {
-      method: form.method,
-      body: formData,
-    });
-    if (response.headers.get("content-type") === "application/json") {
-      const json = await response.json();
-      form.dispatchEvent(new CustomEvent("fancy-submit", { detail: json }));
-      return;
-    }
-    navigate(response.url);
-  });
+  // form.addEventListener("submit", async (e) => {
+  //   e.preventDefault();
+  //   e.stopPropagation();
+  //   const formData = new FormData(form);
+  //   const response = await buyTicket(formData);
+  //   form.dispatchEvent(new CustomEvent("fancy-submit", { detail: response }));
+  // });
 
   form.addEventListener("fancy-submit", (e) => {
     console.log("detail", e.detail);

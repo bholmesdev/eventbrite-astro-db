@@ -1,39 +1,34 @@
 import { defineMiddleware } from "astro:middleware";
 import { ReadableStream } from "node:stream/web";
-import { ActionPromise, ActionStore, action } from "./action";
+import * as _actions from "./actions";
+
+const actions = _actions as Record<string, (formData: FormData) => unknown>;
 
 // `context` and `next` are automatically typed
 export const onRequest = defineMiddleware(async (context, next) => {
-  context.locals.action = action;
+  const actionId = new URL(context.request.url).searchParams.get("actionId");
+  if (!actionId || !(actionId in actions)) return next();
 
-  const actionId = new URL(context.request.url).searchParams.get("action-id");
-  if (!actionId) return next();
+  const action = actions[actionId];
 
   if (!isFormRequest(context.request)) {
     return next();
   }
 
   const formData = await context.request.clone().formData();
+  const res = await action(formData);
 
-  return ActionStore.run({ id: actionId, formData }, async () => {
-    try {
-      await next();
-    } catch (e) {
-      if (e instanceof ActionPromise) {
-        const res: unknown = await e.run(formData);
-        if (res instanceof Response) return res;
-        return new Response(JSON.stringify(res), {
-          status: 200,
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-      }
-      throw e;
-    }
-    // If an action id was sent but no action claims it, return a 400.
-    return new Response(null, { status: 400 });
-  });
+  if (res instanceof Response) return res;
+
+  if (context.request.headers.get("accept")?.startsWith("application/json")) {
+    return new Response(JSON.stringify(res), {
+      status: 200,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  }
+  return next();
 });
 
 const formContentTypes = [
