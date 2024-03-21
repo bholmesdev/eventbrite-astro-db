@@ -1,16 +1,9 @@
 ---
-import { Event, Ticket, db, eq } from "astro:db";
+import { Event, db, eq } from "astro:db";
 import Layout from "../../layouts/Layout.astro";
-import { createForm, validateForm } from "simple:form";
-import { z } from "zod";
 import { buyTicket } from "simple:action";
 
 const eventId = Number(Astro.params.event);
-const ticketForm = createForm({
-  email: z.string().email(),
-  quantity: z.number().max(10),
-  newsletter: z.boolean(),
-});
 
 if (isNaN(eventId)) return Astro.redirect("/404");
 
@@ -41,7 +34,6 @@ if (!event) return Astro.redirect("/404");
 
 <script>
   // enhance the form
-  import { buyTicket } from "simple:action";
   const form = document.querySelector("form")!;
 
   // form.addEventListener("submit", async (e) => {
