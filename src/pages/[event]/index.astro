@@ -1,7 +1,6 @@
 ---
 import { Event, Ticket, db, eq } from "astro:db";
 import Layout from "../../layouts/Layout.astro";
-import { defineAction } from "../../action";
 import { createForm, validateForm } from "simple:form";
 import { z } from "zod";
 
@@ -18,7 +17,7 @@ const event = await db.select().from(Event).where(eq(Event.id, eventId)).get();
 
 if (!event) return Astro.redirect("/404");
 
-const checkout = defineAction(async (formData) => {
+const checkout = Astro.locals.action(async (formData) => {
   const { data, fieldErrors } = await validateForm({ formData, ...ticketForm });
   if (!data) return { fieldErrors };
 

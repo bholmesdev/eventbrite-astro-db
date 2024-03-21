@@ -19,9 +19,9 @@ export class ActionPromise {
   }
 }
 
-export function defineAction<
-  T extends (formData: FormData) => MaybePromise<unknown>
->(fn: T): string {
+export function action<T extends (formData: FormData) => MaybePromise<unknown>>(
+  fn: T
+): string {
   const action = ActionStore.getStore();
   if (action?.id !== HARDCODED_ID) return `?action-id=${HARDCODED_ID}`;
 

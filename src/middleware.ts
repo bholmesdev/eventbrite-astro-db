@@ -1,9 +1,11 @@
 import { defineMiddleware } from "astro:middleware";
 import { ReadableStream } from "node:stream/web";
-import { ActionPromise, ActionResponse, ActionStore } from "./action";
+import { ActionPromise, ActionStore, action } from "./action";
 
 // `context` and `next` are automatically typed
 export const onRequest = defineMiddleware(async (context, next) => {
+  context.locals.action = action;
+
   const actionId = new URL(context.request.url).searchParams.get("action-id");
   if (!actionId) return next();
 
